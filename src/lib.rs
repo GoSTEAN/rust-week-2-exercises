@@ -39,13 +39,12 @@ pub enum ScriptType {
 }
 pub fn classify_script(script: &[u8]) -> ScriptType {
     // TODO: Match script pattern and return corresponding ScriptType
-    
+
     if script.starts_with(&[0x76, 0xa9, 0x14]) // OP_DUP, OP_HASH160, PUSH(20)
         && (script.len() == 3 || (script.len() == 25 && script[23] == 0x88 && script[24] == 0xac))
     {
         ScriptType::P2PKH
-    }
-    else if script.starts_with(&[0x00, 0x14]) // OP_0, PUSH(20)
+    } else if script.starts_with(&[0x00, 0x14]) // OP_0, PUSH(20)
         && (script.len() == 3 || script.len() == 22)
     {
         ScriptType::P2WPKH
@@ -83,8 +82,6 @@ pub fn read_pushdata(script: &[u8]) -> &[u8] {
         _ => &[],
     }
 }
-
-
 
 pub trait Wallet {
     fn balance(&self) -> u64;
